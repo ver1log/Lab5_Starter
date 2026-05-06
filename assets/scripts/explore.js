@@ -23,7 +23,7 @@ function init(){
     }
 
     loadVoices();
-    
+
     if (speechSynthesis.onvoiceschanged !== undefined) {
         speechSynthesis.onvoiceschanged = loadVoices;
     }
@@ -32,10 +32,12 @@ function init(){
         const text = textarea.value.trim();
         if (!text || synth.speaking) return;
 
+        const selectedIndex = voiceSelect.value;
+        if (selectedIndex === 'select') return;  // no voice selected, do nothing
+
         const utterance = new SpeechSynthesisUtterance(text);
 
-        const selectedIndex = voiceSelect.value;
-        if (selectedIndex !== 'select' && voices[selectedIndex]) {
+        if (voices[selectedIndex]) {
             utterance.voice = voices[selectedIndex];
         }
 
